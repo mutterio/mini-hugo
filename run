@@ -1,0 +1,15 @@
+#!/bin/sh
+WATCH="${HUGO_WATCH:=false}"
+SLEEP="${HUGO_REFRESH_TIME:=-1}"
+echo "HUGO_WATCH:" $WATCH
+echo "HUGO_REFRESH_TIME:" $HUGO_REFRESH_TIME
+echo "HUGO_THEME:" $HUGO_THEME
+echo "HUGO_BASEURL" $HUGO_BASEURL
+
+HUGO=/usr/bin/hugo
+
+if [[ $HUGO_WATCH != 'false' ]]; then
+  $HUGO server --bind=0.0.0.0 --watch=true --source="/src" --theme="$HUGO_THEME" --destination="/output" --baseUrl="$HUGO_BASEURL" || exit 1
+else
+  $HUGO --source="/src" --theme="$HUGO_THEME" --destination="/output" --baseUrl="$HUGO_BASEURL" || exit 1
+fi
